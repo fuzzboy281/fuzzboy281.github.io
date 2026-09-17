@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicken Master — Poulet, burgers & wings à Dakar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand"><img src="images/logo.jpg" alt="Chicken Master">Chicken Master</a>
+    <nav class="links" id="links">
+      <a href="#menu">Menu</a>
+      <a href="#pourquoi">Pourquoi nous</a>
+      <a href="#restaurants">Nos restaurants</a>
+      <a href="#avis">Avis</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="btn btn-ghost btn-sm hide-m" id="authBtn">Se connecter</button>
+      <button class="btn btn-primary btn-sm cart-btn" id="cartBtn">🛒 Panier <span class="badge" id="badge">0</span></button>
+      <button class="burger-menu" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Le poulet <span>qui fait plaisir.</span></h1>
+      <p>Poulet croustillant, burgers généreux, wings bien épicés et glaces maison. Commandez en ligne, on vous livre à Mermoz, aux Maristes et partout à Dakar.</p>
+      <div class="hero-cta">
+        <a href="#menu" class="btn btn-dark">Voir le menu</a>
+        <a href="tel:+221773578544" class="btn btn-primary">📞 77 357 85 44</a>
+      </div>
+    </div>
+    <div class="stack" aria-hidden="true">
+      <div class="layer bottom"></div>
+      <div class="layer lettuce"></div>
+      <div class="layer patty"></div>
+      <div class="layer cheese"></div>
+      <div class="layer tomato"></div>
+      <div class="layer top"></div>
+      <img class="logo-float" src="images/logo.jpg" alt="">
+    </div>
+  </div>
+  <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C240,70 480,-10 720,30 C960,70 1200,-10 1440,30 L1440,60 L0,60 Z" fill="#C9571A"/></svg>
+</section>
+<div class="hero-info">
+  <div class="wrap">
+    <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Ouvert 7j/7 de 11h à 23h</div>
+    <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h13v10H3zM16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>Livraison en 30 à 45 min</div>
+    <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Wave, Orange Money ou espèces</div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Notre menu</h2>
+      <p>Prix en FCFA, taxes comprises.</p>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- POURQUOI -->
+<section id="pourquoi" class="why">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Pourquoi Chicken Master ?</h2></div>
+    <div class="why-grid reveal">
+      <div class="why-item"><div class="big">🍗</div><h3>Poulet frais du jour</h3><p>Nos poulets sont préparés chaque matin et marinés 12 heures dans nos épices maison.</p></div>
+      <div class="why-item"><div class="big">🌶️</div><h3>Recette secrète</h3><p>Une panure croustillante et un mélange d'épices que vous ne trouverez nulle part ailleurs à Dakar.</p></div>
+      <div class="why-item"><div class="big">🛵</div><h3>Livraison rapide</h3><p>Nos livreurs partent de Mermoz ou des Maristes : vous êtes servi chaud en moins de 45 minutes.</p></div>
+      <div class="why-item"><div class="big">👨‍👩‍👧</div><h3>Formules famille</h3><p>Des buckets et box à partager, parfaits pour les soirées entre amis ou en famille.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESTAURANTS -->
+<section id="restaurants" style="background:var(--creme-2)">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Nos restaurants</h2>
+      <p>Deux adresses à Dakar, un point de vente à Yoff.</p>
+    </div>
+    <div class="resto-grid reveal">
+      <div class="resto">
+        <div class="map">📍 Mermoz</div>
+        <div class="body">
+          <h3>Chicken Master Mermoz</h3>
+          <p>Route de Mermoz, Dakar</p>
+          <p>☎ <a href="tel:+221773578544">+221 77 357 85 44</a></p>
+          <p>🕒 11h – 23h, 7j/7</p>
+          <div class="actions">
+            <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/search/?api=1&query=Chicken+Master+Mermoz+Dakar" target="_blank" rel="noopener">Itinéraire</a>
+            <a class="btn btn-dark btn-sm" href="https://wa.me/221773578544" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+      <div class="resto">
+        <div class="map">📍 Maristes</div>
+        <div class="body">
+          <h3>Chicken Master Maristes</h3>
+          <p>Cité des Maristes, Dakar</p>
+          <p>☎ <a href="tel:+221773048349">+221 77 304 83 49</a></p>
+          <p>🕒 11h – 23h, 7j/7</p>
+          <div class="actions">
+            <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/search/?api=1&query=Chicken+Master+Maristes+Dakar" target="_blank" rel="noopener">Itinéraire</a>
+            <a class="btn btn-dark btn-sm" href="https://wa.me/221773048349" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+      <div class="resto">
+        <div class="map">📍 Yoff</div>
+        <div class="body">
+          <h3>Point de vente Exclusive</h3>
+          <p>Hypermarché Exclusive, Yoff, Dakar</p>
+          <p>☎ <a href="tel:+221773578544">+221 77 357 85 44</a></p>
+          <p>🕒 Aux horaires de l'hypermarché</p>
+          <div class="actions">
+            <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/search/?api=1&query=Hypermarch%C3%A9+Exclusive+Yoff+Dakar" target="_blank" rel="noopener">Itinéraire</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hours reveal">
+      <strong>Zones de livraison</strong><span>Mermoz, Sacré-Cœur, Fann, Point E, Maristes, Hann, Yoff, Ouakam, Almadies, Liberté 6</span>
+      <strong>Frais de livraison</strong><span>1 000 FCFA (offerts dès 15 000 FCFA de commande)</span>
+      <strong>Sur place / à emporter</strong><span>Sans frais, prêt en 15 minutes</span>
+    </div>
+  </div>
+</section>
+
+<!-- AVIS -->
+<section id="avis">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Ils ont goûté</h2><p>Avis de nos clients</p></div>
+    <div class="avis-grid reveal">
+      <div class="avis"><div class="stars">★★★★★</div><p>« Le meilleur poulet pané de Dakar, croustillant comme il faut. Livraison en 30 minutes à Sacré-Cœur. »</p><div class="who">Aïssatou D.</div></div>
+      <div class="avis"><div class="stars">★★★★★</div><p>« Les wings barbecue sont une tuerie. On commande chaque vendredi soir avec les collègues. »</p><div class="who">Moussa S.</div></div>
+      <div class="avis"><div class="stars">★★★★☆</div><p>« Bucket famille parfait pour nous six, les enfants ont adoré les glaces. »</p><div class="who">Fatou N.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Contactez-nous</h2><p>Une question, une commande groupée, un événement ?</p></div>
+    <div class="contact-grid reveal">
+      <div class="contact-card">
+        <h3>Appelez-nous</h3>
+        <a class="tel" href="tel:+221773578544">+221 77 357 85 44</a>
+        <a class="tel" href="tel:+221773048349">+221 77 304 83 49</a>
+        <p style="margin-top:14px;color:var(--ink-2)">Tous les jours de 11h à 23h.</p>
+        <p style="margin-top:10px;color:var(--ink-2)">📧 contact@chickenmaster.sn</p>
+        <p style="margin-top:6px;color:var(--ink-2)">📸 Instagram · Facebook · TikTok : @chickenmasterdakar</p>
+      </div>
+      <div class="contact-card">
+        <h3>Écrivez-nous</h3>
+        <form id="contactForm" novalidate>
+          <div class="field"><label for="cNom">Prénom et nom</label><input id="cNom" required></div>
+          <div class="field"><label for="cTel">Téléphone</label><input id="cTel" type="tel" placeholder="77 000 00 00" required></div>
+          <div class="field"><label for="cMsg">Message</label><textarea id="cMsg" rows="4" required></textarea></div>
+          <button class="btn btn-primary" type="submit">Envoyer le message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h4>Chicken Master</h4>
+      <p>Poulet, burgers, wings et glaces à Dakar depuis 2019. Mermoz · Maristes · Yoff.</p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <a href="#menu">Menu</a><a href="#restaurants">Nos restaurants</a><a href="#contact">Contact</a>
+      <a href="#" id="footAccount">Mon compte</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="tel:+221773578544">+221 77 357 85 44</a>
+      <a href="tel:+221773048349">+221 77 304 83 49</a>
+      <a href="mailto:contact@chickenmaster.sn">contact@chickenmaster.sn</a>
+    </div>
+    <div class="copy">© 2026 Chicken Master · Site réalisé par Bakar Ndiaye et Marieme Sy</div>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/221773578544?text=Bonjour%20Chicken%20Master%2C%20je%20souhaite%20commander" target="_blank" rel="noopener" aria-label="Commander sur WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2c.2-.6.2-1.1.2-1.2l-.5-.3z"/></svg>
+</a>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Panier">
+  <div class="drawer-head"><h3>Votre panier</h3><button class="close" id="closeCart" aria-label="Fermer">✕</button></div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot">
+    <div class="total"><span>Sous-total</span><span id="subTotal">0 FCFA</span></div>
+    <div class="total big"><span>Total</span><span id="cartTotal">0 FCFA</span></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" id="checkoutBtn">Commander</button>
+  </div>
+</aside>
+
+<!-- AUTH MODAL -->
+<div class="modal" id="authModal">
+  <div class="modal-box">
+    <div class="modal-head"><h3 id="authTitle">Se connecter</h3><button class="close" data-close="authModal" aria-label="Fermer">✕</button></div>
+    <div class="modal-body">
+      <div class="switch"><button id="swLogin" class="active">Connexion</button><button id="swSignup">Créer un compte</button></div>
+      <div class="form-msg" id="authMsg"></div>
+      <form id="loginForm" novalidate>
+        <div class="field"><label for="lTel">Numéro de téléphone</label><input id="lTel" type="tel" placeholder="77 000 00 00" autocomplete="tel"></div>
+        <div class="field"><label for="lPass">Mot de passe</label><input id="lPass" type="password" autocomplete="current-password"></div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" type="submit">Se connecter</button>
+      </form>
+      <form id="signupForm" novalidate style="display:none">
+        <div class="row2">
+          <div class="field"><label for="sPrenom">Prénom</label><input id="sPrenom" autocomplete="given-name"><span class="err">Indiquez votre prénom</span></div>
+          <div class="field"><label for="sNom">Nom</label><input id="sNom" autocomplete="family-name"></div>
+        </div>
+        <div class="field"><label for="sTel">Numéro de téléphone</label><input id="sTel" type="tel" placeholder="77 000 00 00" autocomplete="tel"><span class="err">Numéro sénégalais à 9 chiffres (ex. 77 000 00 00)</span></div>
+        <div class="field"><label for="sAdr">Adresse de livraison</label><input id="sAdr" placeholder="Ex. Mermoz, villa 123, en face de la pharmacie"><span class="err">Indiquez une adresse</span></div>
+        <div class="field"><label for="sPass">Mot de passe</label><input id="sPass" type="password" autocomplete="new-password"><span class="err">6 caractères minimum</span></div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" type="submit">Créer mon compte</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal" id="checkoutModal">
+  <div class="modal-box">
+    <div class="modal-head"><h3>Finaliser la commande</h3><button class="close" data-close="checkoutModal" aria-label="Fermer">✕</button></div>
+    <div class="modal-body" id="checkoutBody"></div>
+  </div>
+</div>
+
+<!-- ACCOUNT MODAL -->
+<div class="modal" id="accountModal">
+  <div class="modal-box">
+    <div class="modal-head"><h3>Mon compte</h3><button class="close" data-close="accountModal" aria-label="Fermer">✕</button></div>
+    <div class="modal-body" id="accountBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
