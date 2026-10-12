@@ -1,264 +1,183 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chicken Master — Poulet, burgers & wings à Dakar</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Energies – Suivi câblage</title>
+<style>
+:root{
+  --navy:#1b2a78; --red:#e3202f; --bg:#ffffff; --soft:#f2f5fb; --tx:#14204f; --mut:#6b7794;
+  --a:#1b2a78; --b:#e3202f; --c:#6c7bc4;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--tx);font-family:"Segoe UI",system-ui,Arial,sans-serif}
+#app{height:100%}
+
+/* ---------- AFFICHAGE TV ---------- */
+.tv{height:100%;display:flex;flex-direction:column;padding:1.5vw 3vw}
+.top{display:flex;align-items:center;justify-content:space-between;border-bottom:.35vw solid var(--red);padding-bottom:1vw}
+.top img{height:9vw;max-height:130px}
+.brand{font-weight:800;font-size:clamp(20px,3vw,54px);letter-spacing:.05em}
+.brand span{color:var(--red)}
+.tag{color:var(--mut);letter-spacing:.3em;font-size:clamp(10px,1.2vw,22px);font-weight:600}
+.right{text-align:right;color:var(--mut);font-size:clamp(14px,1.6vw,28px)}
+.right b{display:block;color:var(--navy);font-size:clamp(18px,2.4vw,44px)}
+.stage{flex:1;position:relative;min-height:0}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .6s;display:flex;flex-direction:column;justify-content:center;gap:2vw;pointer-events:none}
+.slide.on{opacity:1}
+h2{margin:0;font-size:clamp(22px,3vw,56px);color:var(--navy);border-left:.6vw solid var(--red);padding-left:1vw}
+.big{font-size:clamp(60px,13vw,240px);font-weight:800;line-height:1;color:var(--navy)}
+.big small{font-size:.28em;color:var(--mut);font-weight:600}
+.mut{color:var(--mut);font-size:clamp(16px,2vw,38px)}
+.bar{height:clamp(14px,2vw,34px);background:#e3e8f5;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--navy),var(--red));border-radius:99px;transition:width .8s}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2vw}
+.card{background:var(--soft);border-radius:1.4vw;padding:2vw;display:flex;flex-direction:column;gap:1vw;border-top:.5vw solid var(--k)}
+.card h3{margin:0;font-size:clamp(20px,2.6vw,48px);color:var(--k)}
+.num{font-size:clamp(40px,7vw,130px);font-weight:800;line-height:1;color:var(--navy)}
+.num small{font-size:.35em;color:var(--mut);font-weight:600}
+.card .bar i{background:var(--k)}
+.ta{--k:var(--navy)} .tb{--k:var(--red)} .tc{--k:var(--c)}
+.chart{display:flex;gap:1.5vw;height:42vh}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;gap:.6vw;justify-content:flex-end}
+.bars{display:flex;gap:.4vw;align-items:flex-end;height:calc(100% - 3vw);width:100%}
+.bars i{flex:1;border-radius:.4vw .4vw 0 0;min-height:3px}
+.legend{display:flex;gap:2vw;font-size:clamp(14px,1.8vw,32px);font-weight:600}
+.msg{font-size:clamp(28px,5vw,96px);font-weight:700;line-height:1.2;white-space:pre-wrap;color:var(--navy)}
+.dots{display:flex;justify-content:center;gap:10px;padding-top:.8vw}
+.dots span{width:12px;height:12px;border-radius:50%;background:#cfd6ea}
+.dots span.on{background:var(--red)}
+.gbtn{position:fixed;right:10px;bottom:10px;opacity:.1;background:var(--navy);color:#fff;border:0;border-radius:8px;padding:8px 12px;cursor:pointer}
+.gbtn:hover{opacity:1}
+
+/* ---------- GESTION ---------- */
+.adm{max-width:1000px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+.adm h1{margin:0;color:var(--navy);font-size:26px;border-left:6px solid var(--red);padding-left:12px}
+.adm .card{padding:16px;gap:12px;border-radius:14px}
+.adm label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mut);flex:1;min-width:120px}
+.adm input,.adm textarea{background:#fff;color:var(--tx);border:1px solid #c9d1ea;border-radius:8px;padding:10px;font-size:16px;width:100%}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.days{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.days label.t{color:var(--red);font-weight:700}
+.btn{background:var(--red);color:#fff;border:0;border-radius:10px;padding:12px 18px;font-size:16px;font-weight:700;cursor:pointer}
+.btn.s{background:var(--navy)}
+#st{color:var(--mut);font-size:14px}
+</style>
 </head>
 <body>
+<div id="app"></div>
 
-<header>
-  <div class="wrap nav">
-    <a href="#top" class="brand"><img src="images/logo.jpg" alt="Chicken Master">Chicken Master</a>
-    <nav class="links" id="links">
-      <a href="#menu">Menu</a>
-      <a href="#pourquoi">Pourquoi nous</a>
-      <a href="#restaurants">Nos restaurants</a>
-      <a href="#avis">Avis</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <div class="nav-actions">
-      <button class="btn btn-ghost btn-sm hide-m" id="authBtn">Se connecter</button>
-      <button class="btn btn-primary btn-sm cart-btn" id="cartBtn">🛒 Panier <span class="badge" id="badge">0</span></button>
-      <button class="burger-menu" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+<script>
+const KEY = 'smart_energies_suivi_cablage';
+const DEFAUT = {
+  title: "Câblage des panneaux d'isolement",
+  total: 100,            // ← nombre total de coffrets (modifiable dans Gestion)
+  before: 0,             // coffrets déjà câblés avant la semaine
+  week: "Semaine en cours",
+  note: "",
+  teams: [
+    {n:"Équipe A", wt:20, dt:4, d:[0,0,0,0,0,0]},
+    {n:"Équipe B", wt:20, dt:4, d:[0,0,0,0,0,0]},
+    {n:"Équipe C", wt:20, dt:4, d:[0,0,0,0,0,0]}
+  ]
+};
+let S = load();
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)) || structuredClone(DEFAUT); }catch(e){ return structuredClone(DEFAUT); } }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+const D=['Lun','Mar','Mer','Jeu','Ven','Sam'], K=['ta','tb','tc'], COL=['var(--navy)','var(--red)','var(--c)'];
+const app=document.getElementById('app');
+const esc=t=>String(t??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sum=a=>a.reduce((x,y)=>x+(+y||0),0);
+const pct=(a,b)=>b>0?Math.min(100,Math.round(a/b*100)):0;
+const bar=(a,b)=>`<div class="bar"><i style="width:${pct(a,b)}%"></i></div>`;
+const today=Math.min(5,(new Date().getDay()+6)%7);
+const wDone=()=>S.teams.reduce((s,t)=>s+sum(t.d),0);
+const allDone=()=>(+S.before||0)+wDone();
+let cur=0, timer=null, mode='tv';
+
+function slides(){
+  const L=[];
+  L.push(`<h2>${esc(S.title)}</h2>
+    <div class="big">${allDone()}<small> / ${S.total} coffrets</small></div>
+    ${bar(allDone(),S.total)}
+    <div class="mut">${pct(allDone(),S.total)} % câblés · ${Math.max(0,S.total-allDone())} restants · ${wDone()} cette semaine</div>`);
+
+  L.push(`<h2>Aujourd'hui (${D[today]}) et objectif de la semaine</h2>
+    <div class="grid">${S.teams.map((t,i)=>{
+      const x=+t.d[today]||0, w=sum(t.d);
+      return `<div class="card ${K[i]}"><h3>${esc(t.n)}</h3>
+        <div class="num">${x}<small> / ${t.dt} aujourd'hui</small></div>${bar(x,t.dt)}
+        <div class="mut">Semaine : ${w} / ${t.wt}</div>${bar(w,t.wt)}</div>`;}).join('')}</div>`);
+
+  const mx=Math.max(1,...S.teams.flatMap(t=>t.d.map(Number)),...S.teams.map(t=>+t.dt));
+  L.push(`<h2>Production par jour</h2>
+    <div class="chart">${D.map((d,j)=>`<div class="col"><div class="bars">${S.teams.map((t,i)=>
+      `<i style="height:${(+t.d[j]||0)/mx*100}%;background:${COL[i]}"></i>`).join('')}</div><span class="mut">${d}</span></div>`).join('')}</div>
+    <div class="legend">${S.teams.map((t,i)=>`<span style="color:${COL[i]}">■ ${esc(t.n)}</span>`).join('')}</div>`);
+
+  if((S.note||'').trim()) L.push(`<h2>Information</h2><div class="msg">${esc(S.note)}</div>`);
+  return L;
+}
+
+function tv(){
+  mode='tv';
+  const L=slides(); if(cur>=L.length) cur=0;
+  app.innerHTML=`<div class="tv">
+    <div class="top">
+      <img src="SE.jpg" alt="Smart Energies" onerror="this.outerHTML='<div><div class=brand><span>SMART</span> ENERGIES</div><div class=tag>CREATE, BUILD, BE SMART</div></div>'">
+      <div class="right"><b>${esc(S.week)}</b><span id="clk"></span></div>
     </div>
-  </div>
-</header>
+    <div class="stage">${L.map((h,i)=>`<div class="slide ${i==cur?'on':''}">${h}</div>`).join('')}</div>
+    <div class="dots">${L.map((_,i)=>`<span class="${i==cur?'on':''}"></span>`).join('')}</div>
+  </div><button class="gbtn" id="g">Gestion</button>`;
+  document.getElementById('g').onclick=admin;
+  const c=document.getElementById('clk');
+  if(c) c.textContent=new Date().toLocaleString('fr-FR',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+  clearInterval(timer);
+  timer=setInterval(()=>{cur=(cur+1)%L.length; tv();},12000);
+}
 
-<main id="top">
-<section class="hero">
-  <div class="wrap">
-    <div>
-      <h1>Le poulet <span>qui fait plaisir.</span></h1>
-      <p>Poulet croustillant, burgers généreux, wings bien épicés et glaces maison. Commandez en ligne, on vous livre à Mermoz, aux Maristes et partout à Dakar.</p>
-      <div class="hero-cta">
-        <a href="#menu" class="btn btn-dark">Voir le menu</a>
-        <a href="tel:+221773578544" class="btn btn-primary">📞 77 357 85 44</a>
-      </div>
-    </div>
-    <div class="stack" aria-hidden="true">
-      <div class="layer bottom"></div>
-      <div class="layer lettuce"></div>
-      <div class="layer patty"></div>
-      <div class="layer cheese"></div>
-      <div class="layer tomato"></div>
-      <div class="layer top"></div>
-      <img class="logo-float" src="images/logo.jpg" alt="">
-    </div>
-  </div>
-  <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C240,70 480,-10 720,30 C960,70 1200,-10 1440,30 L1440,60 L0,60 Z" fill="#C9571A"/></svg>
-</section>
-<div class="hero-info">
-  <div class="wrap">
-    <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Ouvert 7j/7 de 11h à 23h</div>
-    <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h13v10H3zM16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>Livraison en 30 à 45 min</div>
-    <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Wave, Orange Money ou espèces</div>
-  </div>
-</div>
+function admin(){
+  mode='admin'; clearInterval(timer);
+  app.innerHTML=`<div class="adm"><h1>Gestion – suivi câblage</h1>
+  <div class="card"><div class="row">
+    <label>Titre<input data-k="title" value="${esc(S.title)}"></label>
+    <label>Semaine<input data-k="week" value="${esc(S.week)}"></label></div>
+  <div class="row">
+    <label>Total de coffrets à câbler<input type="number" min="0" data-k="total" value="${S.total}"></label>
+    <label>Déjà câblés avant cette semaine<input type="number" min="0" data-k="before" value="${S.before}"></label></div></div>
+  ${S.teams.map((t,i)=>`<div class="card ${K[i]}"><div class="row">
+    <label>Nom<input data-t="${i}" data-f="n" value="${esc(t.n)}"></label>
+    <label>Objectif semaine<input type="number" min="0" data-t="${i}" data-f="wt" value="${t.wt}"></label>
+    <label>Objectif par jour<input type="number" min="0" data-t="${i}" data-f="dt" value="${t.dt}"></label></div>
+    <div class="days">${D.map((d,j)=>`<label class="${j==today?'t':''}">${d}${j==today?' ●':''}<input type="number" min="0" data-t="${i}" data-d="${j}" value="${t.d[j]}"></label>`).join('')}</div></div>`).join('')}
+  <div class="card"><label>Message à afficher (optionnel)<textarea rows="3" data-k="note">${esc(S.note)}</textarea></label></div>
+  <div class="row"><button class="btn s" id="nw">Nouvelle semaine</button><button class="btn" id="bk">Voir l'affichage</button></div>
+  <div id="st">Les modifications sont enregistrées automatiquement.</div></div>`;
+  app.querySelectorAll('input,textarea').forEach(e=>e.oninput=()=>{
+    const v=e.type=='number'?Math.max(0,+e.value||0):e.value;
+    if(e.dataset.k) S[e.dataset.k]=v;
+    else if(e.dataset.d) S.teams[e.dataset.t].d[e.dataset.d]=v;
+    else S.teams[e.dataset.t][e.dataset.f]=v;
+    save();
+  });
+  document.getElementById('bk').onclick=()=>{cur=0;tv();};
+  document.getElementById('nw').onclick=()=>{
+    if(confirm("Ajouter le total de la semaine aux coffrets déjà câblés et remettre les jours à 0 ?")){
+      S.before=allDone(); S.teams.forEach(t=>t.d=[0,0,0,0,0,0]); save(); admin();
+    }};
+}
 
-<!-- MENU -->
-<section id="menu">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <h2>Notre menu</h2>
-      <p>Prix en FCFA, taxes comprises.</p>
-    </div>
-    <div class="tabs" id="tabs"></div>
-    <div class="grid" id="grid"></div>
-  </div>
-</section>
-
-<!-- POURQUOI -->
-<section id="pourquoi" class="why">
-  <div class="wrap">
-    <div class="section-head reveal"><h2>Pourquoi Chicken Master ?</h2></div>
-    <div class="why-grid reveal">
-      <div class="why-item"><div class="big">🍗</div><h3>Poulet frais du jour</h3><p>Nos poulets sont préparés chaque matin et marinés 12 heures dans nos épices maison.</p></div>
-      <div class="why-item"><div class="big">🌶️</div><h3>Recette secrète</h3><p>Une panure croustillante et un mélange d'épices que vous ne trouverez nulle part ailleurs à Dakar.</p></div>
-      <div class="why-item"><div class="big">🛵</div><h3>Livraison rapide</h3><p>Nos livreurs partent de Mermoz ou des Maristes : vous êtes servi chaud en moins de 45 minutes.</p></div>
-      <div class="why-item"><div class="big">👨‍👩‍👧</div><h3>Formules famille</h3><p>Des buckets et box à partager, parfaits pour les soirées entre amis ou en famille.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- RESTAURANTS -->
-<section id="restaurants" style="background:var(--creme-2)">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <h2>Nos restaurants</h2>
-      <p>Deux adresses à Dakar, un point de vente à Yoff.</p>
-    </div>
-    <div class="resto-grid reveal">
-      <div class="resto">
-        <div class="map">📍 Mermoz</div>
-        <div class="body">
-          <h3>Chicken Master Mermoz</h3>
-          <p>Route de Mermoz, Dakar</p>
-          <p>☎ <a href="tel:+221773578544">+221 77 357 85 44</a></p>
-          <p>🕒 11h – 23h, 7j/7</p>
-          <div class="actions">
-            <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/search/?api=1&query=Chicken+Master+Mermoz+Dakar" target="_blank" rel="noopener">Itinéraire</a>
-            <a class="btn btn-dark btn-sm" href="https://wa.me/221773578544" target="_blank" rel="noopener">WhatsApp</a>
-          </div>
-        </div>
-      </div>
-      <div class="resto">
-        <div class="map">📍 Maristes</div>
-        <div class="body">
-          <h3>Chicken Master Maristes</h3>
-          <p>Cité des Maristes, Dakar</p>
-          <p>☎ <a href="tel:+221773048349">+221 77 304 83 49</a></p>
-          <p>🕒 11h – 23h, 7j/7</p>
-          <div class="actions">
-            <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/search/?api=1&query=Chicken+Master+Maristes+Dakar" target="_blank" rel="noopener">Itinéraire</a>
-            <a class="btn btn-dark btn-sm" href="https://wa.me/221773048349" target="_blank" rel="noopener">WhatsApp</a>
-          </div>
-        </div>
-      </div>
-      <div class="resto">
-        <div class="map">📍 Yoff</div>
-        <div class="body">
-          <h3>Point de vente Exclusive</h3>
-          <p>Hypermarché Exclusive, Yoff, Dakar</p>
-          <p>☎ <a href="tel:+221773578544">+221 77 357 85 44</a></p>
-          <p>🕒 Aux horaires de l'hypermarché</p>
-          <div class="actions">
-            <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/search/?api=1&query=Hypermarch%C3%A9+Exclusive+Yoff+Dakar" target="_blank" rel="noopener">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="hours reveal">
-      <strong>Zones de livraison</strong><span>Mermoz, Sacré-Cœur, Fann, Point E, Maristes, Hann, Yoff, Ouakam, Almadies, Liberté 6</span>
-      <strong>Frais de livraison</strong><span>1 000 FCFA (offerts dès 15 000 FCFA de commande)</span>
-      <strong>Sur place / à emporter</strong><span>Sans frais, prêt en 15 minutes</span>
-    </div>
-  </div>
-</section>
-
-<!-- AVIS -->
-<section id="avis">
-  <div class="wrap">
-    <div class="section-head reveal"><h2>Ils ont goûté</h2><p>Avis de nos clients</p></div>
-    <div class="avis-grid reveal">
-      <div class="avis"><div class="stars">★★★★★</div><p>« Le meilleur poulet pané de Dakar, croustillant comme il faut. Livraison en 30 minutes à Sacré-Cœur. »</p><div class="who">Aïssatou D.</div></div>
-      <div class="avis"><div class="stars">★★★★★</div><p>« Les wings barbecue sont une tuerie. On commande chaque vendredi soir avec les collègues. »</p><div class="who">Moussa S.</div></div>
-      <div class="avis"><div class="stars">★★★★☆</div><p>« Bucket famille parfait pour nous six, les enfants ont adoré les glaces. »</p><div class="who">Fatou N.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="wrap">
-    <div class="section-head reveal"><h2>Contactez-nous</h2><p>Une question, une commande groupée, un événement ?</p></div>
-    <div class="contact-grid reveal">
-      <div class="contact-card">
-        <h3>Appelez-nous</h3>
-        <a class="tel" href="tel:+221773578544">+221 77 357 85 44</a>
-        <a class="tel" href="tel:+221773048349">+221 77 304 83 49</a>
-        <p style="margin-top:14px;color:var(--ink-2)">Tous les jours de 11h à 23h.</p>
-        <p style="margin-top:10px;color:var(--ink-2)">📧 contact@chickenmaster.sn</p>
-        <p style="margin-top:6px;color:var(--ink-2)">📸 Instagram · Facebook · TikTok : @chickenmasterdakar</p>
-      </div>
-      <div class="contact-card">
-        <h3>Écrivez-nous</h3>
-        <form id="contactForm" novalidate>
-          <div class="field"><label for="cNom">Prénom et nom</label><input id="cNom" required></div>
-          <div class="field"><label for="cTel">Téléphone</label><input id="cTel" type="tel" placeholder="77 000 00 00" required></div>
-          <div class="field"><label for="cMsg">Message</label><textarea id="cMsg" rows="4" required></textarea></div>
-          <button class="btn btn-primary" type="submit">Envoyer le message</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-</main>
-
-<footer>
-  <div class="wrap">
-    <div>
-      <h4>Chicken Master</h4>
-      <p>Poulet, burgers, wings et glaces à Dakar depuis 2019. Mermoz · Maristes · Yoff.</p>
-    </div>
-    <div>
-      <h4>Navigation</h4>
-      <a href="#menu">Menu</a><a href="#restaurants">Nos restaurants</a><a href="#contact">Contact</a>
-      <a href="#" id="footAccount">Mon compte</a>
-    </div>
-    <div>
-      <h4>Contact</h4>
-      <a href="tel:+221773578544">+221 77 357 85 44</a>
-      <a href="tel:+221773048349">+221 77 304 83 49</a>
-      <a href="mailto:contact@chickenmaster.sn">contact@chickenmaster.sn</a>
-    </div>
-    <div class="copy">© 2026 Chicken Master · Site réalisé par Bakar Ndiaye et Marieme Sy</div>
-  </div>
-</footer>
-
-<a class="wa" href="https://wa.me/221773578544?text=Bonjour%20Chicken%20Master%2C%20je%20souhaite%20commander" target="_blank" rel="noopener" aria-label="Commander sur WhatsApp">
-  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2c.2-.6.2-1.1.2-1.2l-.5-.3z"/></svg>
-</a>
-
-<!-- CART DRAWER -->
-<div class="overlay" id="overlay"></div>
-<aside class="drawer" id="drawer" aria-label="Panier">
-  <div class="drawer-head"><h3>Votre panier</h3><button class="close" id="closeCart" aria-label="Fermer">✕</button></div>
-  <div class="drawer-body" id="cartBody"></div>
-  <div class="drawer-foot" id="cartFoot">
-    <div class="total"><span>Sous-total</span><span id="subTotal">0 FCFA</span></div>
-    <div class="total big"><span>Total</span><span id="cartTotal">0 FCFA</span></div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center" id="checkoutBtn">Commander</button>
-  </div>
-</aside>
-
-<!-- AUTH MODAL -->
-<div class="modal" id="authModal">
-  <div class="modal-box">
-    <div class="modal-head"><h3 id="authTitle">Se connecter</h3><button class="close" data-close="authModal" aria-label="Fermer">✕</button></div>
-    <div class="modal-body">
-      <div class="switch"><button id="swLogin" class="active">Connexion</button><button id="swSignup">Créer un compte</button></div>
-      <div class="form-msg" id="authMsg"></div>
-      <form id="loginForm" novalidate>
-        <div class="field"><label for="lTel">Numéro de téléphone</label><input id="lTel" type="tel" placeholder="77 000 00 00" autocomplete="tel"></div>
-        <div class="field"><label for="lPass">Mot de passe</label><input id="lPass" type="password" autocomplete="current-password"></div>
-        <button class="btn btn-primary" style="width:100%;justify-content:center" type="submit">Se connecter</button>
-      </form>
-      <form id="signupForm" novalidate style="display:none">
-        <div class="row2">
-          <div class="field"><label for="sPrenom">Prénom</label><input id="sPrenom" autocomplete="given-name"><span class="err">Indiquez votre prénom</span></div>
-          <div class="field"><label for="sNom">Nom</label><input id="sNom" autocomplete="family-name"></div>
-        </div>
-        <div class="field"><label for="sTel">Numéro de téléphone</label><input id="sTel" type="tel" placeholder="77 000 00 00" autocomplete="tel"><span class="err">Numéro sénégalais à 9 chiffres (ex. 77 000 00 00)</span></div>
-        <div class="field"><label for="sAdr">Adresse de livraison</label><input id="sAdr" placeholder="Ex. Mermoz, villa 123, en face de la pharmacie"><span class="err">Indiquez une adresse</span></div>
-        <div class="field"><label for="sPass">Mot de passe</label><input id="sPass" type="password" autocomplete="new-password"><span class="err">6 caractères minimum</span></div>
-        <button class="btn btn-primary" style="width:100%;justify-content:center" type="submit">Créer mon compte</button>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- CHECKOUT MODAL -->
-<div class="modal" id="checkoutModal">
-  <div class="modal-box">
-    <div class="modal-head"><h3>Finaliser la commande</h3><button class="close" data-close="checkoutModal" aria-label="Fermer">✕</button></div>
-    <div class="modal-body" id="checkoutBody"></div>
-  </div>
-</div>
-
-<!-- ACCOUNT MODAL -->
-<div class="modal" id="accountModal">
-  <div class="modal-box">
-    <div class="modal-head"><h3>Mon compte</h3><button class="close" data-close="accountModal" aria-label="Fermer">✕</button></div>
-    <div class="modal-body" id="accountBody"></div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script src="script.js"></script>
+/* Synchronisation en direct entre deux fenêtres du même navigateur */
+window.addEventListener('storage',e=>{ if(e.key===KEY && mode==='tv'){ S=load(); tv(); }});
+document.addEventListener('keydown',e=>{
+  if(mode!=='tv') return;
+  if(e.key==='ArrowRight'){cur++;tv();}
+  if(e.key==='ArrowLeft'){cur=Math.max(0,cur-1);tv();}
+});
+tv();
+</script>
 </body>
 </html>
